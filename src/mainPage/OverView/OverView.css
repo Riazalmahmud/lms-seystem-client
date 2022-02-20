@@ -1,0 +1,8 @@
+.overView-menu a {
+  text-decoration: none;
+  display: block;
+  float: inherit;
+  line-height: 40px;
+  color: #1a1c1e;
+  font-weight: bold;
+}

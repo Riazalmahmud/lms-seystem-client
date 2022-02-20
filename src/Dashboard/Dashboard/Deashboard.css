@@ -1,0 +1,16 @@
+.header-style {
+  margin-right: 40px;
+}
+
+.sidebar-nav a {
+  text-decoration: none;
+  text-align: center;
+  padding: 9px;
+  display: block;
+  color: #14659c;
+  font-size: 17px;
+  font-weight: bold;
+}
+.navigation-part {
+  margin-top: -30px;
+}
