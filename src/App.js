@@ -15,6 +15,7 @@ import About from "./mainPage/About/About.js";
 import UserObserved from "./Dashboard/Chart/UserObserved/UserObserved.js";
 import CircaleChirt from "./Dashboard/Chart/CircaleChirt/CircaleChirt.js";
 import TimeObsered from "./Dashboard/Chart/TimeObsered/TimeObsered.js";
+import Contact from "./mainPage/Contact/Contact.js";
 function App() {
   return (
     <div className="App">
@@ -37,6 +38,9 @@ function App() {
           </Route>
           <Route path="/TimeObsered">
             <TimeObsered />
+          </Route>
+          <Route path="/Contact">
+            <Contact />
           </Route>
           <Route path="/MakeUser">
             <MakeUser />

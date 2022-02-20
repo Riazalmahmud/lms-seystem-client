@@ -19,8 +19,10 @@ import FlileUpolad from "../../mainPage/FlileUpolad/FlileUpolad.js";
 import MakeUser from "../../mainPage/MakeUser/MakeUser.js";
 import OverView from "../../mainPage/OverView/OverView.js";
 import OlineClass from "../../mainPage/OlineClass/OlineClass.js";
+import useFirebase from "../../Hooks/useFirebase.js";
 const Dashboard = () => {
   let { path, url } = useRouteMatch();
+  const { user, logOut } = useFirebase();
   return (
     <div>
       <nav>
@@ -50,9 +52,24 @@ const Dashboard = () => {
                 <Button variant="outline-success">Search</Button>
               </Form>
               <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>
-                  Signed in as: <a href="#login">Mark Otto</a>
-                </Navbar.Text>
+                {user?.email ? (
+                  <Navbar.Text>
+                    <img
+                      className="rounded-circle img-fluid"
+                      width={"50px"}
+                      height={"50px"}
+                      src={user.photoURL}
+                      alt=""
+                    />{" "}
+                    <a href="#login" onClick={logOut}>
+                      LogOut
+                    </a>
+                  </Navbar.Text>
+                ) : (
+                  <Navbar.Text>
+                    Signed in as: <a href="#login">Mark Otto</a>
+                  </Navbar.Text>
+                )}
               </Navbar.Collapse>
             </Navbar.Collapse>
           </Container>
