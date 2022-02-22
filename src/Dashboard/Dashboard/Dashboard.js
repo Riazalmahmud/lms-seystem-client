@@ -51,7 +51,7 @@ const Dashboard = () => {
                 />
                 <Button variant="outline-success">Search</Button>
               </Form>
-              <Navbar.Collapse className="justify-content-end">
+              <Navbar.Collapse className="justify-content-end nav-style">
                 {user?.email ? (
                   <Navbar.Text>
                     <img
@@ -67,9 +67,10 @@ const Dashboard = () => {
                   </Navbar.Text>
                 ) : (
                   <Navbar.Text>
-                    Signed in as: <a href="#login">Mark Otto</a>
+                    <Link to="/login"> Login</Link>
                   </Navbar.Text>
                 )}
+                <Link to="/register"> Register</Link>
               </Navbar.Collapse>
             </Navbar.Collapse>
           </Container>
