@@ -19,11 +19,13 @@ import Contact from "./mainPage/Contact/Contact.js";
 import Login from "./mainPage/Login/Login.js";
 import Register from "./mainPage/Register/Register.js";
 import AuthProvider from "./Hooks/AuthProvider.js";
+import Novigation from "./SharePage/Navigation/Novigation.js";
 function App() {
   return (
     <div className="App">
       <AuthProvider>
         <Router>
+          <Novigation></Novigation>
           <Switch>
             <Route path="/home">
               <Home></Home>
@@ -59,7 +61,7 @@ function App() {
               <Dashboard></Dashboard>
             </Route>
             <Route exact path="/">
-              <Dashboard></Dashboard>
+              <Home />
             </Route>
           </Switch>
         </Router>

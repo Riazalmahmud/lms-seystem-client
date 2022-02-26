@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import useFirebase from "../../Hooks/useFirebase.js";
+import useAuth from "../../Hooks/useAuth.js";
 const Register = () => {
   const [registerLoad, setRegisterLoad] = useState({});
-  const { registerUser, googleSignIn, user } = useFirebase();
-  console.log(registerLoad);
+  const { user, registerUser, googleSignIn } = useAuth();
+
   const handleOnBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -13,12 +13,18 @@ const Register = () => {
     newData[field] = value;
     setRegisterLoad(newData);
   };
-  const handleSubmi = (e) => {
+  const handleSubmit = (e) => {
     if (registerLoad.password !== registerLoad.password2) {
       <alert severity="warning">password din't match !</alert>;
       return;
     }
-    registerUser(registerLoad.email, registerLoad.password, registerLoad.name);
+    registerUser(
+      registerLoad.email,
+      registerLoad.password,
+      registerLoad.password2,
+      registerLoad.name
+    );
+    // console.log(registerEmailAndPassword);
     e.preventDefault();
   };
   return (
@@ -26,7 +32,7 @@ const Register = () => {
       <div className="container">
         <div className="w-50 text-center mx-auto shadow-lg p-3 rounded mb-5 mt-5 ">
           <h4 className="fw-bold">Register form</h4>
-          <form onSubmit={handleSubmi} className="login-design">
+          <form onSubmit={handleSubmit} className="login-design">
             <Form.Control
               type="text"
               name="name"

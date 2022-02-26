@@ -19,36 +19,47 @@ const useFirebase = () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   const googleSignIn = () => {
+    setIsLoading(true);
     signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
       })
       .catch((error) => {
         setError(error.massage);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
-  const signInEmailPassword = (email, password) => {
+  const registerUser = (email, password) => {
+    setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        setUser(userCredential.user);
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  };
-
-  const registerUser = (auth, email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        setUser(userCredential.user);
+        const user = userCredential.user;
+        setUser(user);
         // ...
       })
       .catch((error) => {
-        setError(error.message);
-      });
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const signInEmailPassword = (email, password) => {
+    setIsLoading(true);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        setUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -57,12 +68,14 @@ const useFirebase = () => {
         setUser(user);
       } else {
         setUser({});
+        setIsLoading(false);
       }
     });
     return () => unSubscribed;
   }, []);
 
   const logOut = () => {
+    setIsLoading(true);
     signOut(auth)
       .then(() => {
         // Sign-out successful.
@@ -70,14 +83,27 @@ const useFirebase = () => {
       })
       .catch((error) => {
         // An error happened.
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
+  const saveUser = (email, displayName) => {
+    const user = { email, displayName };
+    fetch("http://localhost:5000/userCollect", {
+      method: "POST",
+      headers: {
+        "content-type": "application/JSON",
+      },
+      body: JSON.stringify(user),
+    }).then((res) => res.json());
+  };
+
   return {
     user,
     googleSignIn,
-    logOut,
-    signInEmailPassword,
     registerUser,
+    signInEmailPassword,
+    logOut,
+    isLoading,
     error,
   };
 };
